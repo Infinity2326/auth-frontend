@@ -1,14 +1,11 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import '../shared/styles/globals.css'
+import { Geist } from 'next/font/google'
+import { ToggleTheme } from '@/shared/components/ui'
+import { MainProvider } from '@/shared/providers'
+import '@/shared/styles/globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
 })
 
@@ -27,7 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} antialiased`}>
+        <MainProvider>
+          <div className="relative flex flex-col min-h-screen">
+            <ToggleTheme />
+            <div className="flex justify-center items-center px-4 w-full h-screen">{children}</div>
+          </div>
+        </MainProvider>
+      </body>
     </html>
   )
 }
