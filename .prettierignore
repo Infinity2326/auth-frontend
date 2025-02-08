@@ -1,0 +1,11 @@
+.next
+node_modules
+package-lock.json
+yarn.lock
+public
+out
+dist
+*.md
+*.svg
+*.ico
+*.txt
