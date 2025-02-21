@@ -1,8 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import { useTheme } from 'next-themes'
+import React, { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import {
   Button,
   Form,
@@ -14,22 +17,32 @@ import {
   Input,
   PasswordInput,
 } from '@/shared/components/ui'
-import { RegisterSchema, TypeRegisterSchema } from '../../schemes'
+import { RegisterSchema, TypeRegisterSchema } from '../schemes'
 import { AuthWrapper } from './AuthWrapper'
+import { useRegisterMutation } from '../hooks'
 
 export function RegisterForm() {
+  const { theme } = useTheme()
+  const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null)
+
   const form = useForm<TypeRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      name: '',
+      displayName: '',
       email: '',
       password: '',
       passwordRepeat: '',
     },
   })
 
+  const { register, isPending } = useRegisterMutation()
+
   const onSubmit = (data: TypeRegisterSchema) => {
-    console.log(data)
+    if (recaptchaValue) {
+      register({ values: data, recaptcha: recaptchaValue })
+    } else {
+      toast.error('Подтвердите что вы не робот')
+    }
   }
 
   return (
@@ -41,15 +54,15 @@ export function RegisterForm() {
       isShowSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="gap-2 space-y-2 grid">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2 space-y-2">
           <FormField
             control={form.control}
-            name="name"
+            name="displayName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Имя</FormLabel>
                 <FormControl>
-                  <Input placeholder="Иван" {...field} />
+                  <Input disabled={isPending} placeholder="Иван" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -62,7 +75,12 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Почта</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="example@gmail.com" {...field} />
+                  <Input
+                    disabled={isPending}
+                    type="email"
+                    placeholder="example@gmail.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -75,7 +93,12 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Пароль</FormLabel>
                 <FormControl>
-                  <PasswordInput type="password" placeholder="******" {...field} />
+                  <PasswordInput
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,13 +111,27 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Повторите пароль</FormLabel>
                 <FormControl>
-                  <PasswordInput type="password" placeholder="******" {...field} />
+                  <PasswordInput
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Создать аккаунт</Button>
+          <div className="flex justify-center">
+            <ReCAPTCHA
+              sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY as string}
+              onChange={setRecaptchaValue}
+              theme={theme === 'light' ? 'light' : 'dark'}
+            />
+          </div>
+          <Button disabled={isPending} type="submit">
+            Создать аккаунт
+          </Button>
         </form>
       </Form>
     </AuthWrapper>
