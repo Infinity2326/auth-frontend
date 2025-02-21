@@ -35,3 +35,5 @@ export interface User {
   method: AuthMethod
   accounts: Account[]
 }
+
+export type OauthProvider = 'google' | 'yandex'
