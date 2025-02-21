@@ -19,7 +19,7 @@ import {
 } from '@/shared/components/ui'
 import { LoginSchema, TypeLoginSchema } from '../schemes'
 import { AuthWrapper } from './AuthWrapper'
-import { useLoginMutation } from '../hooks/'
+import { useLoginMutation } from '../hooks'
 
 export function LoginForm() {
   const { theme } = useTheme()

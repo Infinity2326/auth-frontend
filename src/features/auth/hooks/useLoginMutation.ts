@@ -1,6 +1,6 @@
 import { toastMessageHandler } from '@/shared/utils'
 import { authService } from '../services'
-import { TypeLoginSchema } from './../schemes'
+import { TypeLoginSchema } from '../schemes'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'

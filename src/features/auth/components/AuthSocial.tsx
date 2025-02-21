@@ -4,13 +4,13 @@ import React from 'react'
 import { FaGoogle, FaYandex } from 'react-icons/fa'
 import { Button } from '@/shared/components/ui'
 import { useRouter } from 'next/navigation'
-import { useOauthByProvider } from '../hooks/useOauthByProvider'
+import { useOauthByProviderMutation } from '../hooks'
 import { OauthProvider } from '../types'
 
 export function AuthSocial() {
   const router = useRouter()
 
-  const registerWithOauth = useOauthByProvider()
+  const registerWithOauth = useOauthByProviderMutation()
 
   const handleOAuthClick = async (provider: OauthProvider) => {
     const url = await registerWithOauth(provider)

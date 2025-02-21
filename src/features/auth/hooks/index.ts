@@ -1,2 +1,3 @@
 export * from './useRegisterMutation'
-export * from './useLoginMutatuon'
+export * from './useLoginMutation'
+export * from './useOauthByProviderMutation'
