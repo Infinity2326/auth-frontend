@@ -15,9 +15,9 @@ export function PasswordInput({ ...props }: React.InputHTMLAttributes<HTMLInputE
       <button
         type="button"
         onClick={toggleVisibility}
-        className="right-0 absolute inset-y-0 flex items-center px-2 text-foreground"
+        className="absolute inset-y-0 right-0 flex items-center px-2 text-foreground"
       >
-        {isVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+        {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
       </button>
     </div>
   )

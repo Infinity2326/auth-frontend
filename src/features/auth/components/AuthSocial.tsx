@@ -23,11 +23,11 @@ export function AuthSocial() {
   return (
     <>
       <div className="grid grid-cols-2 gap-6">
-        <Button onClick={() => handleOAuthClick('google')} variant="outline">
+        <Button onClick={() => handleOAuthClick('google')} variant="outline" className="ml-6">
           <FaGoogle className="mr-2 size-4" />
           Google
         </Button>
-        <Button onClick={() => handleOAuthClick('yandex')} variant="outline">
+        <Button onClick={() => handleOAuthClick('yandex')} variant="outline" className="mr-6">
           <FaYandex className="mr-2 size-4" />
           Яндекс
         </Button>

@@ -26,9 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} antialiased`}>
         <MainProvider>
-          <div className="relative flex flex-col min-h-screen">
+          <div className="relative flex min-h-screen flex-col">
             <ToggleTheme />
-            <div className="flex justify-center items-center px-4 w-full h-screen">{children}</div>
+            <div className="flex h-screen w-full items-center justify-center px-4">{children}</div>
           </div>
         </MainProvider>
       </body>
