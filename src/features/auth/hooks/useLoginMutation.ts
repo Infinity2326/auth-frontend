@@ -6,7 +6,9 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { type ResponseError } from '@/shared/types'
 
-export function useLoginMutation() {
+export function useLoginMutation(
+  setIsShowTwoFactor: React.Dispatch<React.SetStateAction<boolean>>,
+) {
   const router = useRouter()
 
   const {
@@ -21,6 +23,7 @@ export function useLoginMutation() {
     onSuccess(data: any) {
       if (data.message) {
         toastMessageHandler(data)
+        setIsShowTwoFactor(true)
       } else {
         toast.success('Успешная авторизация')
         router.push('/dashboard/settings')
