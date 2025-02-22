@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { authService } from '../services'
-import { OauthProvider } from '../types'
+import { type OauthProvider } from '../types'
 
 export function useOauthByProviderMutation() {
   const { mutateAsync: registerWithOauth } = useMutation({

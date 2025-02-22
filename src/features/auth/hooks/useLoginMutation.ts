@@ -1,12 +1,14 @@
 import { toastMessageHandler } from '@/shared/utils'
 import { authService } from '../services'
-import { TypeLoginSchema } from '../schemes'
+import { type TypeLoginSchema } from '../schemes'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { type ResponseError } from '@/shared/types'
 
 export function useLoginMutation() {
   const router = useRouter()
+
   const {
     mutate: login,
     isPending,
@@ -24,7 +26,7 @@ export function useLoginMutation() {
         router.push('/dashboard/settings')
       }
     },
-    onError(error) {
+    onError(error: ResponseError) {
       toastMessageHandler(error)
     },
   })

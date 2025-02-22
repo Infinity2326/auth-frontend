@@ -1,7 +1,7 @@
-import { AxiosError } from 'axios'
 import { toast } from 'sonner'
+import { type ResponseError } from '@/shared/types'
 
-export function toastMessageHandler(error: AxiosError<ErrorResponse>) {
+export function toastMessageHandler(error: ResponseError) {
   if (error.response?.data?.message) {
     const errorMessage = error.response.data.message as string
     toast.error(errorMessage)
@@ -10,8 +10,4 @@ export function toastMessageHandler(error: AxiosError<ErrorResponse>) {
   } else {
     toast.error('Ошибка со стороны сервера')
   }
-}
-
-interface ErrorResponse {
-  message: string
 }

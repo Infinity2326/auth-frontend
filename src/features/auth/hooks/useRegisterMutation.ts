@@ -1,8 +1,9 @@
 import { toastMessageHandler } from '@/shared/utils'
 import { authService } from '../services'
-import { TypeRegisterSchema } from './../schemes'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { type TypeRegisterSchema } from './../schemes'
+import { type ResponseError } from '@/shared/types'
 
 export function useRegisterMutation() {
   const { mutate: register, isPending } = useMutation({
@@ -14,7 +15,7 @@ export function useRegisterMutation() {
         description: 'Проверьте вашу почту для подтверждения аккаунта',
       })
     },
-    onError(error) {
+    onError(error: ResponseError) {
       toastMessageHandler(error)
     },
   })
