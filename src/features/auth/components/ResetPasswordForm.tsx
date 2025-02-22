@@ -15,30 +15,27 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  PasswordInput,
 } from '@/shared/components/ui'
-import { LoginSchema, type TypeLoginSchema } from '../schemes'
+import { ResetPasswordSchema, type TypeResetPasswordSchema } from '../schemes'
 import { AuthWrapper } from './AuthWrapper'
-import { useLoginMutation } from '../hooks'
-import Link from 'next/link'
+import { useResetPasswordMutation } from '../hooks'
 
-export function LoginForm() {
+export function ResetPasswordForm() {
   const { theme } = useTheme()
   const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null)
 
-  const { login, isPending } = useLoginMutation()
+  const { resetPassword, isPending } = useResetPasswordMutation()
 
-  const form = useForm<TypeLoginSchema>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<TypeResetPasswordSchema>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: '',
-      password: '',
     },
   })
 
-  const onSubmit = (data: TypeLoginSchema) => {
+  const onSubmit = (data: TypeResetPasswordSchema) => {
     if (recaptchaValue) {
-      login({ values: data, recaptcha: recaptchaValue })
+      resetPassword({ values: data, recaptcha: recaptchaValue })
     } else {
       toast.error('Подтвердите что вы не робот')
     }
@@ -46,11 +43,10 @@ export function LoginForm() {
 
   return (
     <AuthWrapper
-      heading="Войти"
-      description="Чтобы войти на сайт введите вашу почту и пароль."
-      backButtonLabel="Еще нет аккаунта? Регистрация"
-      backButtonHref="/auth/register"
-      isShowSocial
+      heading="Сброс пароля"
+      description="Для сброса пароля укажите свою почту"
+      backButtonLabel="Войти в аккаунт"
+      backButtonHref="/auth/logion"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2 space-y-2">
@@ -72,32 +68,6 @@ export function LoginForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center justify-between">
-                  <FormLabel>Пароль</FormLabel>
-                  <Link
-                    href="/auth/reset-password"
-                    className="ml-auto inline-block text-sm underline"
-                  >
-                    Забыли пароль?
-                  </Link>
-                </div>
-                <FormControl>
-                  <PasswordInput
-                    type="password"
-                    disabled={isPending}
-                    placeholder="******"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <div className="flex justify-center">
             <ReCAPTCHA
               sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY as string}
@@ -106,7 +76,7 @@ export function LoginForm() {
             />
           </div>
           <Button disabled={isPending} type="submit">
-            Войти в аккаунт
+            Сбросить пароль
           </Button>
         </form>
       </Form>
